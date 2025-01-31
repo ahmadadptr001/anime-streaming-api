@@ -1,6 +1,6 @@
 {
     "version": 2,
     "builds": [{ "src": "akses_api.py", "use": "@vercel/python" }],
-    "routes": [{ "src": "/(.*)", "dest": "api/index.py" }]
+    "routes": [{ "src": "/(.*)", "dest": "akses_api.py" }]
   }
   

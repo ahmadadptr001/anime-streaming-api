@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-
+import chromedriver_autoinstaller
 from selenium import webdriver; import time, re
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -10,11 +10,13 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 # konfigurasi selenium sebelum melakukan scrape ke web animisme.net
+chromedriver_autoinstaller.install()
+
 options = Options()
 options.add_argument('--headless')
 options.add_argument('User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36')
 
-service = Service(r'C:\Users\User\downloads\Chromedriver.exe')
+service = Service(chromedriver_autoinstaller.get_chrome_driver_path())
 driver = webdriver.Chrome(service=service, options=options)
 
 # initialisasi flask

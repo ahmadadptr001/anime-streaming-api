@@ -156,11 +156,9 @@ def scraping_halaman_video():
     judul = driver.find_elements(By.CLASS_NAME, 'entry-title')[0].text
     print("[✅] Berhasil mendapatkan judul anime (video)")
     
-    driver.execute_script('document.querySelector(".mirror").onchange')
-    try:
-        link_video = wait(driver, 10).until(EC.presence_of_element_located(By.TAG_NAME, 'iframe')).get_attribute('src')
-    except:
-        link_video = 'null'
+    driver.execute_script('document.querySelector(".mirror").onclick')
+    driver.execute_script('document.querySelector(".mirror option").onclick')
+    link_video = driver.find_elements(By.TAG_NAME, 'iframe')[0].get_attribute('src')
     print("[✅] Berhasil mendapatkan link video anime")
     
     peringkat = driver.find_element(By.CLASS_NAME, 'rating').text
@@ -182,13 +180,15 @@ def scraping_halaman_video():
     print("[✅] Berhasil mendapatkan link anime rekomendasi")
     
     for i in range(len(tipe_anime_rekomendasi)):
-        data_film[0]['rekomendasi'][f'anime{i}'] = {
-            'judul' : gambar_dan_judul_anime_rekomendasi[i+1].get_attribute('title'),
-            'tipe' : tipe_anime_rekomendasi[i+1].text,
-            'status' : status_anime_rekomendasi[i+1].text,
-            'gambar' : gambar_dan_judul_anime_rekomendasi[i+1].get_attribute('src'),
-            'link_detail_halaman' : link_anime_rekomendasi[i+1].get_attribute('href')
-        }
+        try:
+            data_film[0]['rekomendasi'][f'anime{i}'] = {
+                'judul' : gambar_dan_judul_anime_rekomendasi[i+1].get_attribute('title'),
+                'tipe' : tipe_anime_rekomendasi[i+1].text,
+                'status' : status_anime_rekomendasi[i+1].text,
+                'gambar' : gambar_dan_judul_anime_rekomendasi[i+1].get_attribute('src'),
+                'link_detail_halaman' : link_anime_rekomendasi[i+1].get_attribute('href')
+            }
+        except IndexError: pass
     
     return jsonify(data_film)        
 

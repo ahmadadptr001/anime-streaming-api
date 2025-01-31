@@ -193,5 +193,7 @@ def scraping_halaman_video():
     return jsonify(data_film)        
 
 if __name__ == "__main__":
-    ahmad_api.run(port=5000, debug=True, threaded=True)
+    import os
+    port = int(os.environ.get('PORT', 5000))
+    ahmad_api.run(port=port, debug=True, threaded=True)
     

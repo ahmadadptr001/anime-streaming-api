@@ -194,6 +194,6 @@ def scraping_halaman_video():
 
 if __name__ == "__main__":
     import os
-    # port = int(os.environ.get('PORT', 5000))
-    ahmad_api.run(debug=True, threaded=True)
+    port = int(os.environ.get('PORT', 5000))
+    ahmad_api.run(port=port, debug=True, threaded=True)
     
